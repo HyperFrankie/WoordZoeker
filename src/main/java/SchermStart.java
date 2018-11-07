@@ -23,5 +23,6 @@ public class SchermStart extends Application {
         stage.setScene(scene);
         stage.setTitle("Woordzoeker");
         stage.show();
+        SchermBestuurder.postInit();
     }
 }

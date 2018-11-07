@@ -16,7 +16,7 @@ public class SchermBestuurder {
 
     @FXML
     public void initialize() {
-        tab1Pane.getChildren().add(new WoordzoekerTabel(10, 10, 40, 40));
+        tab1Pane.getChildren().add(new WoordzoekerTabel(30, 30, 20, 20));
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
         fileChooser.getExtensionFilters().addAll(

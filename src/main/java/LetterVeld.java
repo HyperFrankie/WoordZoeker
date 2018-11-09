@@ -7,20 +7,15 @@ public class LetterVeld extends Pane {
     public static double standardBreedte = 10.0, standardHoogte = 10.0;
     public Label label;
 
-    public LetterVeld(String letter, double breedte, double hoogte, boolean onderRand, boolean rechterRand) {
+    public LetterVeld(String letter, double breedte, double hoogte) {
         label = new Label(letter);
         label.setAlignment(Pos.CENTER);
         getChildren().add(label);
         setGrootte(breedte, hoogte);
-        setStyle("-fx-border-style: solid " + (rechterRand ? "solid" : "none") + " " + (onderRand ? "solid" : "none") + " solid; -fx-border-width: 1;");
-    }
-
-    public LetterVeld(String letter, boolean onderRand, boolean rechterRand) {
-        this(letter, standardBreedte, standardHoogte, onderRand, rechterRand);
     }
 
     public LetterVeld(String letter) {
-        this(letter,true, true);
+        this(letter, standardBreedte, standardHoogte);
     }
 
     public void setLetter(String letter) {

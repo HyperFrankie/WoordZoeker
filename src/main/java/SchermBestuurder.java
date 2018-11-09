@@ -17,7 +17,7 @@ public class SchermBestuurder {
 
     @FXML
     public void initialize() {
-        tab1Pane.getChildren().add(new WoordzoekerTabel(30, 30, 20, 20));
+//        tab1Pane.getChildren().add(new WoordzoekerTabel(30, 30, 20, 20));
     }
 
     public static void postInit() {

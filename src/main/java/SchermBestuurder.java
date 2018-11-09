@@ -85,9 +85,6 @@ public class SchermBestuurder {
         applyBlur(tab1ImgView.getImage(), tab1ImgView);
     }
 
-    /**
-    BLUR TO REMOVE DUST
-     */
 	public void applyBlur(Image afbeelding, ImageView laag) {
         PixelReader pxReader = afbeelding.getPixelReader();
         double r = 0, g = 0, b = 0, a = 0, totalWeight = 0, width = afbeelding.getWidth(), height = afbeelding.getHeight();
@@ -123,9 +120,6 @@ public class SchermBestuurder {
         }
 
         laag.setImage(afbeelding1);
-
-//        BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-//        Graphics2D g2d = img.createGraphics();
 
 
         /*Ocr.setUp();

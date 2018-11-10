@@ -1,41 +1,39 @@
-import com.asprise.ocr.Ocr;
-import com.sun.istack.internal.Nullable;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.TabPane;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.image.*;
-import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.net.MalformedURLException;
 
 public class SchermBestuurder {
 
     @FXML
-    AnchorPane scherm;
-    @FXML
-    TabPane tabPane;
-    @FXML
-    AnchorPane tab1Pane;
-    @FXML
-	ImageView tab1ImgView;
+    BorderPane borderPane;
+
+    ZoomableScrollPane zoomableScrollPane;
+	StackPane inhoud = new StackPane();
+    ImageView tab1ImgView = new ImageView();
+    Canvas canvas = new Canvas();
+
+
 
     @FXML
     public void initialize() {
-//        tab1Pane.getChildren().add(new WoordzoekerTabel(30, 30, 20, 20));
+        inhoud.getChildren().add(tab1ImgView);
+        inhoud.getChildren().add(canvas);
+        zoomableScrollPane = new ZoomableScrollPane(inhoud, false);
+        borderPane.setCenter(zoomableScrollPane);
+        borderPane.getCenter().setId("zoomAbleScrollPane");
     }
 
     public static void postInit() {
         SchermStart.stage.setMaximized(true);
     }
 
-	public void openBestandKiezer() throws MalformedURLException {
+	public void openBestandKiezer() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Kies afbeelding");
 		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Afbeeldingen", "*.img", "*.png", "*.jpg"));
@@ -44,10 +42,15 @@ public class SchermBestuurder {
 		System.out.println(geselecteerdBestand.toString());
         Image afbeelding = new Image("file:///" + geselecteerdBestand.getPath());
         tab1ImgView.setImage(afbeelding);
-        tab1ImgView.prefWidth(afbeelding.getWidth());
-        tab1ImgView.prefHeight(afbeelding.getHeight());
-        tab1ImgView.setFitWidth(afbeelding.getWidth());
-        tab1ImgView.setFitHeight(afbeelding.getHeight());
+
+        double width = afbeelding.getWidth();
+        double height = afbeelding.getHeight();
+        tab1ImgView.prefWidth(width);
+        tab1ImgView.prefHeight(height);
+        tab1ImgView.setFitWidth(width);
+        tab1ImgView.setFitHeight(height);
+        canvas.setWidth(width);
+        canvas.setHeight(height);
 	}
 
 	@FXML
@@ -57,7 +60,7 @@ public class SchermBestuurder {
 
     public void applyFilters(Image afbeelding, ImageView laag) {
         applyGrayScale(afbeelding, laag);
-        applyBlur(afbeelding, laag);
+        applyBlur(afbeelding, laag, true);
     }
 
     @FXML
@@ -82,10 +85,10 @@ public class SchermBestuurder {
 
     @FXML
     public void applyBlur() {
-        applyBlur(tab1ImgView.getImage(), tab1ImgView);
+        applyBlur(tab1ImgView.getImage(), tab1ImgView, false);
     }
 
-	public void applyBlur(Image afbeelding, ImageView laag) {
+	public void applyBlur(Image afbeelding, ImageView laag, boolean brightnessOnly) {
         PixelReader pxReader = afbeelding.getPixelReader();
         double r = 0, g = 0, b = 0, a = 0, totalWeight = 0, width = afbeelding.getWidth(), height = afbeelding.getHeight();
         WritableImage afbeelding1 = new WritableImage((int) width, (int) height);
